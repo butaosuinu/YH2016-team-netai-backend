@@ -54,9 +54,19 @@ const updateMemberSkill = (member_id) => {
 
 }
 
+const deleteMemeberSkill = (member_id, skill_id) => {
+	mysql.then((session) => {
+		const mydb = session.getTable('tsg');
+		const memberSkillTable = mydb.getTable('member_skill');
+		memberSkillTable.delete().where('member_id=' + member_id).execute();
+	})
+}
+
 module.exports = {
 	createTeam: createTeam,
 	getTeamData: getTeamData,
-	addMemberToTeam: addMemberToTeam
+	addMemberToTeam: addMemberToTeam,
+	addMemberSkill: addMemberSkill,
 	// addMemberSkill: addMemberSkill
+	deleteMemeberSkill: deleteMemeberSkill
 }
