@@ -67,6 +67,5 @@ module.exports = {
 	getTeamData: getTeamData,
 	addMemberToTeam: addMemberToTeam,
 	addMemberSkill: addMemberSkill,
-	// addMemberSkill: addMemberSkill
 	deleteMemeberSkill: deleteMemeberSkill
 }
