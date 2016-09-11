@@ -40,6 +40,14 @@ const addMemberToTeam = (member_name, team_id) => {
 	});
 }
 
+const deleteMemberTeam = (team_id, member_id) => {
+	mysql.then((session) => {
+		const mydb = session.getSchema('tsg');
+		const memberTable = mydb.getTable('member');
+		memberTable.delete().where('member_id=' + member_id).execute();
+	})
+}
+
 const addMemberSkill = (member_id, skill_id) => {
 	mysql.then((session) => {
 		const mydb = session.getSchema('tsg');
@@ -58,7 +66,9 @@ const deleteMemeberSkill = (member_id, skill_id) => {
 	mysql.then((session) => {
 		const mydb = session.getTable('tsg');
 		const memberSkillTable = mydb.getTable('member_skill');
-		memberSkillTable.delete().where('member_id=' + member_id).execute();
+		memberSkillTable.delete()
+						.where('member_id=' + member_id + ' AND ' + 'skill_id=' + skill_id)
+						.execute();
 	})
 }
 
@@ -66,6 +76,7 @@ module.exports = {
 	createTeam: createTeam,
 	getTeamData: getTeamData,
 	addMemberToTeam: addMemberToTeam,
+	deleteMemberTeam: deleteMemberTeam,
 	addMemberSkill: addMemberSkill,
 	deleteMemeberSkill: deleteMemeberSkill
 }

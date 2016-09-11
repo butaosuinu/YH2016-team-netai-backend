@@ -32,7 +32,7 @@ router.post('/team/:team_id/members', (req, res) => {
 	})
 });
 
-router.post('/team/:team_id/members/:member_id', (req, res) => {
+router.post('/team/:team_id/members/:member_id/update', (req, res) => {
 	for (var i = req.body.add_skills.length - 1; i >= 0; i--) {
 		teamModel.addMemberSkill(req.params.member_id, req.body.add_skills[i]).then(function(r) {
 			res.send(r);
@@ -44,6 +44,12 @@ router.post('/team/:team_id/members/:member_id', (req, res) => {
 			res.send(r);
 		});
 	};
+});
+
+router.post('/team/:team_id/members/:member_id/delete', (req, res) => {
+	teamModel.deleteMemberTeam(req.params.team_id, req.params.member_id).then(function(r) {
+		res.send(r);
+	});
 });
 
 module.exports = router;
