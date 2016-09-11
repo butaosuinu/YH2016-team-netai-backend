@@ -12,7 +12,8 @@ router.all('/*', function ( req, res, next ) {
 });
 
 router.post('/team', (req, res) => {
-	teamModel.createTeam(req.body.name).then(function(r) {
+	console.log(req.body);
+	teamModel.createTeam(req.body.name, req.body.description).then(function(r) {
 		res.send(r);
 	});
 });
@@ -25,24 +26,27 @@ router.get('/team/:id', (req, res) => {
 router.post('/team/:team_id/members', (req, res) => {
 	teamModel.addMemberToTeam(req.body.member_name, req.params.team_id).then(function() {
 		for (var i = req.body.skill.length - 1; i >= 0; i--) {
-			teamModel.addMemberSkill(req.body.new_member_id, req.body.skill[i]).then(function(r) {
-				res.send(r);
-			});
+			teamModel.addMemberSkill(req.body.new_member_id, req.body.skill[i])
+					.then(function(r) {
+						res.send(r);
+					});
 		}
 	})
 });
 
 router.post('/team/:team_id/members/:member_id/update', (req, res) => {
 	for (var i = req.body.add_skills.length - 1; i >= 0; i--) {
-		teamModel.addMemberSkill(req.params.member_id, req.body.add_skills[i]).then(function(r) {
-			res.send(r);
-		});
+		teamModel.addMemberSkill(req.params.member_id, req.body.add_skills[i])
+				.then(function(r) {
+					res.send(r);
+				});
 	};
 	for (var i = req.body.del_skills.length - 1; i >= 0; i--) {
 		req.body.del_skills[i]
-		teamModel.deleteMemeberSkill(req.params.member_id, req.body.del_skills[i]).then(function(r) {
-			res.send(r);
-		});
+		teamModel.deleteMemeberSkill(req.params.member_id, req.body.del_skills[i])
+				.then(function(r) {
+					res.send(r);
+				});
 	};
 });
 

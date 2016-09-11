@@ -2,13 +2,11 @@ const mysqlx = require('mysqlx');
 const mysql = require('../mysql.js');
 const q = require('q');
 
-const createTeam = (name) => {
-	// const deferred = q.defer()
+const createTeam = (name, desc) => {
 	mysql.then((session) => {
 		const mydb = session.getSchema('tsg');
-
 		const teamTable = mydb.getTable('team');
-		teamTable.insert(['team_name']).values([name]).execute();
+		teamTable.insert(['team_name', 'team_discription']).values(name, desc).execute();
 	});
 };
 
@@ -35,7 +33,7 @@ const addMemberToTeam = (member_name, team_id) => {
 		const memberTable = mydb.getTable('member');
 
 		memberTable.insert(['member_name', 'team_id'])
-					.values([member_name, team_id])
+					.values(member_name, team_id)
 					.execute();
 	});
 }
@@ -53,7 +51,7 @@ const addMemberSkill = (member_id, skill_id) => {
 		const mydb = session.getSchema('tsg');
 		const memberSkillTable = mydb.getTable('member_skill');
 		memberSkillTable.insert(['member_id', 'skill_id'])
-						.values([member_id, skill_id])
+						.values(member_id, skill_id)
 						.execute();
 	})
 }
